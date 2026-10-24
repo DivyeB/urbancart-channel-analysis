@@ -7,6 +7,9 @@ Tool: Claude Code (Claude Opus 5.5). Short running log of where AI helped and, e
 - **Step 1:** Proposed the repo layout and created the skeleton folders and logs.
 - **Step 2:** Tried a MySQL 8.0 install via winget (failed: Oracle had archived the installer, 404); candidate then chose DuckDB. Drafted the load DDL and `COPY` statements and explained each against MySQL. Ran file-level shell checks (line counts, line endings, date shapes, email lengths) to set the expected row counts and confirm the types.
 
+- **Step 3:** Drafted 13 profiling queries (03–15), ran them after approval, and reconciled totals across files.
+- **Step 4:** Drafted the clean tables with constraints (16–18), an independent reconciliation (19) and an impact sizing (20). Used Python only as a calculator for percentages and ratios on query outputs (no `bc` on this machine).
+
 ## Candidate overrides of AI suggestions (not errors, but judgment calls the candidate made)
 - **Step 2:** AI recommended all-text (VARCHAR) raw tables with types applied in the clean layer. Candidate chose typed raw tables instead. AI revised the SQL to explicit `CREATE TABLE` plus `COPY`.
 - **Step 2:** Candidate asked to verify that `signup_date` has no time part and that `email` fits a plain string type before approving. AI checked both (clean), and also checked `order_date`.

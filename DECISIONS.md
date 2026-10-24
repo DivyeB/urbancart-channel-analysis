@@ -17,6 +17,10 @@ Running log of every assumption and judgment call, with the reason. Newest entri
 | D6 | Outlier check on `order_value` (step 3) | p1/p99 percentile rule; multiple-of-median rule; no formal rule | **No formal outlier rule** (candidate's call). The separate value-distribution file is dropped; min, max, average, median and the count of zero/negative `order_value` are folded into `08_profile_orders_overview.sql` | A formal outlier rule isn't needed to answer the brief. Min/max and ≤0 counts still catch impossible values (negative, zero, absurdly large) at almost no cost |
 | D7 | Step 3 scope and gate | — | Profiling files `03`–`15`: users 03–08 (city and email split into separate files, kept because the candidate expects junk values in email; 08 added as a follow-up on the test accounts 07 found), orders 09–13, spend 14–15. **Approval gate per table batch**: one approval covers that table's files. Results saved to `outputs/profiling/NN_name.md` | Keeps the "nothing runs unapproved" rule while staying near the ~3-hour budget |
 | D8 | Line endings in git | Default (Windows `core.autocrlf=true` converts to CRLF on checkout) vs `.gitattributes` | `.gitattributes`: `data/** -text` (no conversion), `*.sql`/`*.md` as LF | Keeps the raw CSVs byte-for-byte as delivered on any machine, honouring "never edit the raw files" |
+| D9 | O1 treatment: exact-duplicate orders | A: keep one copy per `order_id`; B: keep all | **A** | Each pair is identical in all 5 columns and `order_id` identifies an order, so the second row is an export artefact. No information is lost |
+| D10 | U2 treatment: QA test accounts | A: exclude users and their orders; B: keep; C: keep and flag | **A**. Rule: email domain = `urbancart.in` (company's own domain; 08 showed it flags exactly the same 35 users as the `user<id>@` mismatch rule). Spend unchanged | They aren't customers, and would flatter Affiliate on every metric the cut decision depends on. Exclusion keeps them out of all downstream use, including the Part 3 self-serve tool. Raw tables keep them for audit |
+| D11 | U1 treatment: blank channel | A: "Unknown"; B: Organic; C: exclude; D: allocate proportionally | **A: label `'Unknown'`**, with a `channel_was_blank` flag. Reported as its own row; never counted in a paid channel's CAC or in Organic | Makes no assumption about what a blank means (`Organic` already exists as a value). Paid CAC can only be very slightly too high (conservative), at 1.4% of users |
+| D12 | Clean layer form | Views vs tables | **Tables with constraints**: `PRIMARY KEY`, `NOT NULL`, `FOREIGN KEY` (orders → users), `CHECK` (status list, value > 0, spend ≥ 0). All statuses kept in `clean_orders`; the `delivered` filter lives in the analysis queries | Constraints turn our profiling findings into assertions: if a future file breaks one (conflicting duplicate, orphan order, new status spelling), the build fails loudly instead of skewing numbers silently. This is also the basis for Part 3's automated data-quality checks |
 | D4 | Database file in git | Commit `.duckdb` file vs rebuild from SQL | Not committed (`.gitignore`) | It's a build product: anyone can rebuild it from `/data` + `/sql`, which proves the pipeline is reproducible |
 
 ## Step results
@@ -36,12 +40,20 @@ Running log of every assumption and judgment call, with the reason. Newest entri
   - Total spend ₹1,590,000 reconciles with the brief's "about ₹16 lakh".
   - Observation for step 6 (not an issue): Meta Ads spend rises every month, ₹54,000 (Jan) → ₹116,000 (Jun).
 
-## Data-quality issues found in profiling (treatments decided in step 4)
-| ID | Table | Issue | Rows affected | Source query |
-|---|---|---|---|---|
-| U1 | users | Blank `acquisition_channel` | 72 users (1.4%) | 03, 05 |
-| U2 | users / orders | Internal QA test accounts (`qa.test*@urbancart.in`), all attributed to Affiliate, all with delivered orders | 35 users; 310 raw delivered order rows, ₹853,172 | 07, 08 |
-| O1 | orders | Exact duplicate order rows (each duplicated `order_id` appears twice) | 206 extra rows (150 delivered = ₹203,594) | 09, 10 |
+- **Step 4 (cleaning), 2026-10-24.** `16`–`18` built clean_users, clean_orders and clean_marketing_spend with no constraint errors (PK, NOT NULL, FK, CHECK all held). `19`: all 8 reconciliation checks pass. Outputs in `outputs/cleaning/`.
+  - Orders chain (19 Q2): raw 5,684 rows / 4,949 delivered / ₹5,945,268 → after dedup 5,478 / 4,799 / ₹5,741,674 → after test-account removal **5,193 / 4,514 / ₹4,961,884** (= clean_orders). Differences (arithmetic on 19 output): dedup removed 206 rows, 150 delivered, ₹203,594 (matches 10); test removal removed 285 rows, all delivered, ₹779,790.
+  - The 310 raw test-account rows / ₹853,172 in 08 included 25 duplicate rows (₹73,382); deduplicated, it's 285 rows / ₹779,790.
+  - Users chain (19 Q3): raw 5,135 → **clean 5,100**; 72 'Unknown' at both stages (no test account had a blank channel).
+  - **U1 impact (20 Q1):** of the 72 Unknown users, **40 are customers** (≥1 delivered order), with ₹85,089 delivered revenue.
+  - **U2 impact (20 Q2), Affiliate delivered, deduped:** including test accounts 540 customers / 831 orders / ₹1,263,177; excluding 505 / 546 / ₹483,387. Gap = 35 customers, 285 orders, ₹779,790 (matches 19). Test accounts are **61.7%** of Affiliate's deduplicated delivered revenue; revenue per Affiliate customer would be ₹2,339.22 with them vs ₹957.20 without (arithmetic on 20 output, illustration only; official metrics come in step 6).
+  - Cosmetic: 19 Q1 shows counts as e.g. `5100.00` because the UNION mixes integer and decimal columns, so DuckDB casts them all to DECIMAL. Values unaffected.
+
+## Data-quality log (issues, treatment, impact)
+| ID | Table | Issue | Rows affected | Treatment | Impact | Source |
+|---|---|---|---|---|---|---|
+| U1 | users | Blank `acquisition_channel` | 72 users (1.4%); 40 of them are customers, ₹85,089 delivered revenue | Labelled `'Unknown'` + `channel_was_blank` flag; reported separately, not in any paid CAC (D11) | Paid CAC at most very slightly overstated (conservative) | 03, 05, 20 |
+| U2 | users / orders | Internal QA test accounts (`qa.test*@urbancart.in`), all Affiliate | 35 users; 285 deduped delivered orders, ₹779,790 | Excluded users and their orders (D10) | Would have been 61.7% of Affiliate's delivered revenue and +35 customers | 07, 08, 19, 20 |
+| O1 | orders | Exact duplicate order rows (each duplicated `order_id` twice) | 206 extra rows (150 delivered, ₹203,594) | One copy kept per `order_id` (D9) | Delivered revenue would be overstated by ₹203,594 | 09, 10, 19 |
 
 ## Fixed by the brief (not our choice)
 - Successful order = `status = 'delivered'`; cancelled and returned excluded.
