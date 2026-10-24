@@ -13,6 +13,8 @@ Tool: Claude Code (Claude Opus 5.5). Short running log of where AI helped and, e
 - **Steps 5–8:** Drafted metric definitions (M1–M8) for the candidate to choose from; drafted analysis queries 21–27 and the chart export 28, each run only after approval; laid out cut options; drafted memo section options for the candidate to choose from and reword.
 - **Step 8, charts:** At the candidate's request, drafted a prompt for Claude in Chrome to build the Looker Studio report (C1–C3) from the CSVs exported by `28_export_chart_data.sql`. The chart data and all calculations come from SQL; Claude in Chrome only lays out the charts. Claude in Chrome reported that Looker Studio rejected the ISO date format in C1 and offered workarounds (edit a CSV copy, a PARSE_DATE calculated field, or a text axis); the candidate chose to fix it at the source instead (28 exports `YYYYMMDD`), keeping the repo and dashboard identical. The original export had assumed ISO dates would load (an AI oversight, minor).
 
+- **Step 8, memo:** At the candidate's request, AI wrote the memo draft (`docs/Part2_Memo.md`) from the section options the candidate had chosen (D15), trimmed it to 249 words including the title, and checked every number against the query outputs. The candidate reviews and edits it.
+
 ## Candidate overrides of AI suggestions (not errors, but judgment calls the candidate made)
 - **Step 2:** AI recommended all-text (VARCHAR) raw tables with types applied in the clean layer. Candidate chose typed raw tables instead. AI revised the SQL to explicit `CREATE TABLE` plus `COPY`.
 - **Step 2:** Candidate asked to verify that `signup_date` has no time part and that `email` fits a plain string type before approving. AI checked both (clean), and also checked `order_date`.
