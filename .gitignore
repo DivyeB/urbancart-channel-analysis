@@ -1,0 +1,17 @@
+# DuckDB database files: rebuilt from /data + /sql (see README)
+*.duckdb
+*.duckdb.wal
+*.wal
+
+# Brief from Shiprocket: not published until decided (DECISIONS.md, open question 7)
+Case_Study_Brief.pdf
+
+# Python / OS / editor noise
+__pycache__/
+*.pyc
+.venv/
+.ipynb_checkpoints/
+.DS_Store
+Thumbs.db
+.vscode/
+.claude/
