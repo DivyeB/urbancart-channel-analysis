@@ -20,7 +20,9 @@
 --     excluded, signup-month cohorts; Plan 1 rules as in 27 (D13).
 --   * Values are rounded for display (money to the rupee, index and
 --     LTV:CAC to 1 / 2 dp) only at the final SELECT (M8).
---   * month_start is a real DATE so Looker Studio treats it as a date.
+--   * month_start is written as YYYYMMDD text (e.g. 20260101): Looker
+--     Studio's CSV File Upload only converts that pattern to a Date
+--     type; it rejected ISO 2026-01-01 ("can't convert to date").
 --   * The outputs/charts/data/ folder must exist before running.
 -- Expected result: 3 CSV files with headers.
 --   C1: 24 rows; Meta Jan = 100 / 100, Meta May spend_index = 211.1,
@@ -56,7 +58,7 @@ COPY (
     )
     SELECT
         channel,
-        month_start,
+        strftime(month_start, '%Y%m%d')                                               AS month_start,  -- Looker date format
         CAST(spend_inr AS BIGINT)                                                     AS spend_inr,
         new_customers,
         ROUND(100.0 * spend_inr

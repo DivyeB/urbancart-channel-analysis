@@ -2,6 +2,7 @@
 data/** -text
 
 # Project text files always use LF
+outputs/**/*.csv text eol=lf
 *.sql      text eol=lf
 *.md       text eol=lf
 .gitignore text eol=lf
