@@ -10,6 +10,9 @@ Tool: Claude Code (Claude Opus 5.5). Short running log of where AI helped and, e
 - **Step 3:** Drafted 13 profiling queries (03–15), ran them after approval, and reconciled totals across files.
 - **Step 4:** Drafted the clean tables with constraints (16–18), an independent reconciliation (19) and an impact sizing (20). Used Python only as a calculator for percentages and ratios on query outputs (no `bc` on this machine).
 
+- **Steps 5–8:** Drafted metric definitions (M1–M8) for the candidate to choose from; drafted analysis queries 21–27 and the chart export 28, each run only after approval; laid out cut options; drafted memo section options for the candidate to choose from and reword.
+- **Step 8, charts:** At the candidate's request, drafted a prompt for Claude in Chrome to build the Looker Studio report (C1–C3) from the CSVs exported by `28_export_chart_data.sql`. The chart data and all calculations come from SQL; Claude in Chrome only lays out the charts.
+
 ## Candidate overrides of AI suggestions (not errors, but judgment calls the candidate made)
 - **Step 2:** AI recommended all-text (VARCHAR) raw tables with types applied in the clean layer. Candidate chose typed raw tables instead. AI revised the SQL to explicit `CREATE TABLE` plus `COPY`.
 - **Step 2:** Candidate asked to verify that `signup_date` has no time part and that `email` fits a plain string type before approving. AI checked both (clean), and also checked `order_date`.
