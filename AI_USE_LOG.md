@@ -17,6 +17,7 @@ Tool: Claude Code (Claude Opus 5.5). Short running log of where AI helped and, e
 ## Mistakes / corrections
 | # | Step | What went wrong | Who caught it | Fix |
 |---|---|---|---|---|
+| 3 | 6 | **AI stated "Meta new customers fell 5.5%" as a driver of Meta's CAC rise.** It was (a) computed outside SQL with Python as a calculator, not by a query, against the candidate's rule, and (b) based on the June cohort (104), which is the immature cohort we had just shown to be understated. Like-for-like Jan→May, Meta customers actually *rose* 8.2% (110 → 119) while spend rose 111.1%. Same conclusion (diminishing returns), but the specific claim was wrong. | Candidate (asked where the number came from) | Reframed with Jan→May figures; derived figures to be put into a query before use in the memo |
 | 2 | 3 | **AI suggested dropping the email profiling check** ("the one I'd drop... doesn't touch any metric"). Candidate insisted on keeping it, expecting junk values. That check then found 35 internal QA test accounts (`qa.test*@urbancart.in`), which could inflate customer counts if they placed orders. | Candidate | Email check kept; follow-up query 08 added |
 | 1 | 1 | Minor tooling slip: ran Python with `-I` (isolated mode), which ignores the `PYTHONIOENCODING` env var, so the ₹ symbol in the brief crashed the text extraction twice before the AI switched to `sys.stdout.reconfigure`. No effect on the analysis. | AI | Changed approach |
 
