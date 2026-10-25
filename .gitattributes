@@ -1,9 +1,0 @@
-# Raw data stays byte-for-byte as delivered: no line-ending conversion
-data/** -text
-
-# Project text files always use LF
-outputs/**/*.csv text eol=lf
-*.sql      text eol=lf
-*.md       text eol=lf
-.gitignore text eol=lf
-.gitattributes text eol=lf
