@@ -1,35 +1,15 @@
 # AI Use Log
 
-Tool: Claude Code (Claude Opus 5.5). Short running log of where AI helped and, especially, mistakes made or caught.
+## Role of AI
+I used Claude Code (Claude Opus 5.5) as an assistant for repetitive work: writing SQL, drafting documentation and write-ups. I also used it as a second mind for suggestions when needed, including explanations of DuckDB (against the MySQL I know) and of GCP tooling. Claude in Chrome assisted with the chart layout in Looker Studio.
 
-## Where AI helped
-- **Step 1:** Extracted the brief's text from the PDF (Python `pypdf`, used only to read it), summarised the brief, listed deliverables, and flagged ambiguous definitions.
-- **Step 1:** Proposed the repo layout and created the skeleton folders and logs.
-- **Step 2:** Tried a MySQL 8.0 install via winget (failed: Oracle had archived the installer, 404); candidate then chose DuckDB. Drafted the load DDL and `COPY` statements and explained each against MySQL. Ran file-level shell checks (line counts, line endings, date shapes, email lengths) to set the expected row counts and confirm the types.
+## Working rules
+- No query was run without my line-by-line review and approval.
+- No decision was taken by AI on its own; every suggestion was discussed with me and either accepted or overridden by me.
+- Every figure in the deliverables traces back to a saved query output.
 
-- **Step 3:** Drafted 13 profiling queries (03–15), ran them after approval, and reconciled totals across files.
-- **Step 4:** Drafted the clean tables with constraints (16–18), an independent reconciliation (19) and an impact sizing (20). Used Python only as a calculator for percentages and ratios on query outputs (no `bc` on this machine).
-
-- **Steps 5–8:** Drafted metric definitions (M1–M8) for the candidate to choose from; drafted analysis queries 21–27 and the chart export 28, each run only after approval; laid out cut options; drafted memo section options for the candidate to choose from and reword.
-- **Step 8, charts:** At the candidate's request, drafted a prompt for Claude in Chrome to build the Looker Studio report (C1–C3) from the CSVs exported by `28_export_chart_data.sql`. The chart data and all calculations come from SQL; Claude in Chrome only lays out the charts. Claude in Chrome reported that Looker Studio rejected the ISO date format in C1 and offered workarounds (edit a CSV copy, a PARSE_DATE calculated field, or a text axis); the candidate chose to fix it at the source instead (28 exports `YYYYMMDD`), keeping the repo and dashboard identical. The original export had assumed ISO dates would load (an AI oversight, minor).
-
-- **Step 8, memo:** At the candidate's request, AI wrote the memo draft (`docs/Part2_Memo.md`) from the section options the candidate had chosen (D15), trimmed it to 249 words including the title, and checked every number against the query outputs. The candidate reviews and edits it.
-
-- **Step 9:** The candidate is new to cloud tooling and asked AI to lead: AI chose the stack (D18), explained each tool in terms of what was built in Parts 1–2, and simplified it to 4 steps at the candidate's request. The candidate swapped dbt for SQLMesh (on their resume). AI drafted `docs/Part3_Design.md` (397 words) for the candidate to read. The candidate draws the architecture diagram by hand (AI's Mermaid version was removed).
-
-## Candidate overrides of AI suggestions (not errors, but judgment calls the candidate made)
-- **Step 2:** AI recommended all-text (VARCHAR) raw tables with types applied in the clean layer. Candidate chose typed raw tables instead. AI revised the SQL to explicit `CREATE TABLE` plus `COPY`.
-- **Step 2:** Candidate asked to verify that `signup_date` has no time part and that `email` fits a plain string type before approving. AI checked both (clean), and also checked `order_date`.
-
-## Mistakes / corrections
-| # | Step | What went wrong | Who caught it | Fix |
-|---|---|---|---|---|
-| 5 | 8 | **AI stated as fact that Looker Studio's CSV upload converts `YYYYMMDD` text to a Date**, and changed query 28 on that basis. It didn't work: Looker still refused to convert the field. The claim was presented with more confidence than was justified. | Claude in Chrome / candidate (the conversion failed in Looker) | Accepted a single PARSE_DATE calculated field in Looker as a documented exception (D17); the `YYYYMMDD` export stays because PARSE_DATE reads it |
-| 4 | 8 | **AI wrote a Claude in Chrome prompt that pointed the agent at a local folder path** for the three CSVs, assuming it could read files on the computer. A browser agent can't browse the local disk, so the prompt would have failed at the upload step. | Candidate (asked how Claude in Chrome would read the path) | Candidate uploads the CSVs to Looker Studio; prompt revised to start from existing data sources |
-| 3 | 6 | **AI stated "Meta new customers fell 5.5%" as a driver of Meta's CAC rise.** It was (a) computed outside SQL with Python as a calculator, not by a query, against the candidate's rule, and (b) based on the June cohort (104), which is the immature cohort we had just shown to be understated. Like-for-like Jan→May, Meta customers actually *rose* 8.2% (110 → 119) while spend rose 111.1%. Same conclusion (diminishing returns), but the specific claim was wrong. | Candidate (asked where the number came from) | Reframed with Jan→May figures; derived figures to be put into a query before use in the memo |
-| 2 | 3 | **AI suggested dropping the email profiling check** ("the one I'd drop... doesn't touch any metric"). Candidate insisted on keeping it, expecting junk values. That check then found 35 internal QA test accounts (`qa.test*@urbancart.in`), which could inflate customer counts if they placed orders. | Candidate | Email check kept; follow-up query 08 added |
-| 6 | 1 | **AI installed a package without asking:** `pip install pypdf` to read the brief, against the candidate's "ask before installing" expectation. Harmless, but it skipped the permission step. Flagged by AI itself at step 9. | AI (self-reported) | Later installs (e.g. a .docx library) were proposed and left to the candidate's decision |
-| 1 | 1 | Minor tooling slip: ran Python with `-I` (isolated mode), which ignores the `PYTHONIOENCODING` env var, so the ₹ symbol in the brief crashed the text extraction twice before the AI switched to `sys.stdout.reconfigure`. No effect on the analysis. | AI | Changed approach |
-
-## Notes
-- Context correction from the candidate: the assignment is from **Shiprocket**; UrbanCart is a fictional scenario company. Recorded in DECISIONS.md. (This was context the AI didn't have, not an AI error.)
+## Where I corrected or redirected the AI
+- **Data types:** AI defaulted every column in the raw tables to VARCHAR. In my experience that is not good practice, so I enforced proper types (INTEGER, DATE, DECIMAL) instead.
+- **Email check:** AI treated the email column as low priority and suggested skipping that check. I insisted on it, expecting malformed addresses. It found none, but it revealed 35 internal test accounts making up 61.7% of Affiliate's revenue, which were then excluded.
+- **Unknown channel:** I kept users with a blank acquisition channel in the data, because blank is not necessarily wrong data, but did not attribute them to any channel or create an "Unknown" bucket, because that would invent an attribution the business never had. They are excluded from every channel metric and reported only in the data-quality log (72 users, 40 of them customers).
+- **Which channel to cut:** Affiliate ranked worst on LTV:CAC, and AI's explanation of Meta's rising CAC rested on a figure it hadn't queried. I found Meta's monthly spend increase odd, so I asked for a month-on-month comparison of spend vs new customers. It showed Meta spend rising ~26% a month while new customers stayed flat, which became the core evidence for the recommendation.
