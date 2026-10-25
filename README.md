@@ -47,7 +47,7 @@ Table naming: **Raw Tables** (`raw_*`) hold the CSVs as loaded; **Clean Tables**
 
 ## How to rebuild and rerun everything
 
-**Requirement:** the [DuckDB CLI](https://duckdb.org/docs/installation/) (built and tested with v2.0.0). No server or password is needed; the database is a single file, `urbancart.duckdb`, created in the repo root (and git-ignored).
+**Requirement:** the [DuckDB CLI](https://duckdb.org/docs/installation/) (built and tested with v2.0.0). No server or password is needed; the database is a single file, `urbancart.duckdb`, created in the repo root.
 
 **Run all queries in order** from the repo root (Git Bash or any bash shell). This rebuilds the database from `data/` and rewrites every file in `outputs/`:
 
