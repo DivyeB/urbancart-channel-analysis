@@ -45,30 +45,7 @@ docs/      deliverables for Parts 1–3 and the reflection
 
 Table naming: **Raw Tables** (`raw_*`) hold the CSVs as loaded; **Clean Tables** (`clean_*`) hold the corrected data every metric is calculated from.
 
-## How to rebuild and rerun everything
-
-**Requirement:** the [DuckDB CLI](https://duckdb.org/docs/installation/) (built and tested with v2.0.0). No server or password is needed; the database is a single file, `urbancart.duckdb`, created in the repo root.
-
-**Run all queries in order** from the repo root (Git Bash or any bash shell). This rebuilds the database from `data/` and rewrites every file in `outputs/`:
-
-```bash
-rm -f urbancart.duckdb
-mkdir -p outputs/inspecting outputs/cleaning outputs/analysis outputs/sanity_check outputs/charts/data
-for f in sql/*.sql; do
-  n=$(basename "$f" .sql)
-  case "$n" in
-    0[3-9]_*|1[0-5]_*) out="outputs/inspecting/$n.md" ;;
-    19_*|20_*)         out="outputs/cleaning/$n.md" ;;
-    2[1-57]_*)         out="outputs/analysis/$n.md" ;;
-    26_*)              out="outputs/sanity_check/$n.md" ;;
-    *)                 out="/dev/null" ;;  # 01, 02, 16-18 build tables; 28 writes CSVs itself
-  esac
-  echo "running $n"
-  duckdb -markdown urbancart.duckdb < "$f" > "$out" || { echo "FAILED: $n"; break; }
-done
-```
-
-**What each group does:**
+## SQL files (run in numbered order)
 
 | Files | Purpose | Writes |
 |---|---|---|
