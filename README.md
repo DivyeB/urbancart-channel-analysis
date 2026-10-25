@@ -57,5 +57,3 @@ Table naming: **Raw Tables** (`raw_*`) hold the CSVs as loaded; **Clean Tables**
 | `26` | Brief Q6 sanity check: Affiliate LTV:CAC by an independent route | `outputs/sanity_check/` |
 | `27` | Part 2: the Plan 1 budget figures and impact range | `outputs/analysis/` |
 | `28` | Export chart data for Looker Studio | `outputs/charts/data/` |
-
-To run a single query: `duckdb -markdown urbancart.duckdb < sql/21_q2_cac_by_channel.sql`.
