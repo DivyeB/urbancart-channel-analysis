@@ -3,7 +3,7 @@
 *.duckdb.wal
 *.wal
 
-# Brief from Shiprocket: not published until decided (DECISIONS.md, open question 7)
+# Brief from Shiprocket: not published
 Case_Study_Brief.pdf
 
 # Python / OS / editor noise
