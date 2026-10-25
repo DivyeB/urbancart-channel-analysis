@@ -11,7 +11,7 @@
 --   * 4 paid channels x 6 months = 24 rows if complete. 24 rows alone
 --     does not prove completeness (one duplicate + one gap = 24 too),
 --     hence Queries 2-3.
---   * month is VARCHAR 'YYYY-MM' (D5); Query 1 checks the format.
+--   * month is VARCHAR 'YYYY-MM'; Query 1 checks the format.
 --   * Brief: total spend is "about Rs 16 lakh" (1,600,000) for Jan-Jun.
 --   * Raw rows; nothing deduplicated.
 --   * Query 2's grid uses SUM(CASE ... END) with NO 'ELSE 0', so an

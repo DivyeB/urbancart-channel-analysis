@@ -3,11 +3,11 @@
 -- Brief Part 1, Q5: CAC by month for each paid channel, grouping new
 -- customers by their SIGNUP month. Which channel is getting more
 -- expensive, and by how much from January to June?
--- Definitions (DECISIONS.md, M1, M7, M8):
+-- Definitions (see docs/Part1_Analysis.md):
 --   * Monthly CAC = spend in month m / new customers who signed up in
 --     month m (and had >= 1 delivered order by 2026-06-30).
 --   * Jan->Jun change reported in rupees and %.
---   * Sensitivity check (M7): the same change Jan->May. June signups
+--   * Sensitivity check: the same change Jan->May. June signups
 --     have had at most 30 days to order, so June CAC is inflated by
 --     timing alone. If the trend holds Jan->May, it's real.
 -- Filters and edge cases:
@@ -21,7 +21,7 @@
 --   * signups and conversion_pct are DIAGNOSTIC columns, not brief
 --     metrics: they show whether a CAC change comes from spend or from
 --     a lower share of signups buying.
---   * Changes are calculated from unrounded CACs (M8), so a displayed
+--   * Changes are calculated from unrounded CACs, so a displayed
 --     change can differ by Rs 1 from subtracting the rounded CACs.
 -- Expected result:
 --   Query 1: 24 rows. Per channel, spend sums to its 21 total and

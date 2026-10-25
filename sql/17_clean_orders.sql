@@ -1,10 +1,10 @@
 -- =====================================================================
 -- 17_clean_orders.sql
 -- What:    Builds clean_orders from raw_orders:
---            * keeps one copy of each exact-duplicate row (O1, D9)
---            * excludes orders placed by QA test accounts (U2, D10)
+--            * keeps one copy of each exact-duplicate row (O1)
+--            * excludes orders placed by QA test accounts (U2)
 --            * keeps ALL statuses; the delivered-only filter is applied
---              in each analysis query, where it is visible (D12)
+--              in each analysis query, where it is visible
 --          raw_orders is only read, never changed.
 -- Assumptions:
 --   * Run after 16 (needs clean_users for the foreign key).

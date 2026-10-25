@@ -1,7 +1,7 @@
 -- =====================================================================
 -- 28_export_chart_data.sql
 -- What:    Writes the data behind memo charts C1-C3 to CSV files in
---          outputs/charts/data/, for upload to Looker Studio (D16).
+--          outputs/charts/data/, for upload to Looker Studio.
 --          All calculation happens here in SQL; Looker Studio only draws.
 --   C1 -> c1_spend_vs_customers_index.csv
 --         per paid channel and month: spend, new customers, and both
@@ -17,9 +17,9 @@
 --   duckdb.exe urbancart.duckdb < sql/28_export_chart_data.sql
 -- Assumptions:
 --   * Same definitions as 21-27: clean tables, delivered only, Unknown
---     excluded, signup-month cohorts; Plan 1 rules as in 27 (D13).
+--     excluded, signup-month cohorts; Plan 1 rules as in 27.
 --   * Values are rounded for display (money to the rupee, index and
---     LTV:CAC to 1 / 2 dp) only at the final SELECT (M8).
+--     LTV:CAC to 1 / 2 dp) only at the final SELECT.
 --   * month_start is written as YYYYMMDD text (e.g. 20260101): Looker
 --     Studio's CSV File Upload only converts that pattern to a Date
 --     type; it rejected ISO 2026-01-01 ("can't convert to date").

@@ -10,7 +10,7 @@
 --   Query 3: the users chain: raw -> after test-account removal, and
 --            how many clean users are 'Unknown'.
 -- Assumptions:
---   * Test account rule = email domain 'urbancart.in' (D10).
+--   * Test account rule = email domain 'urbancart.in'.
 --   * The expected side deliberately uses DIFFERENT SQL from 16-17
 --     (NOT IN instead of NOT EXISTS; DISTINCT in a CTE), so this is an
 --     independent recomputation, not the same logic run twice. NOT IN

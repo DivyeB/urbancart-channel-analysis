@@ -3,7 +3,7 @@
 -- Supporting analysis for Q5 (not a brief question): month on month,
 -- how did each paid channel's spend change compared with its new
 -- customers? Shows whether extra spend bought extra customers.
--- Definitions: same as 24 (M1, M7):
+-- Definitions: same as 24:
 --   * new customers = users who signed up in that month and have >= 1
 --     delivered order (by 2026-06-30), grouped by SIGNUP month.
 --   * MoM change % = (this month - previous month) / previous month.

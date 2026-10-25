@@ -2,11 +2,11 @@
 -- 22_q3_customer_value_by_channel.sql
 -- Brief Part 1, Q3: for each channel, including Organic, the revenue
 -- per customer and the repeat purchase rate.
--- Definitions (DECISIONS.md, M1, M3, M4, M8):
---   * Customer = clean user with >= 1 delivered order (M1).
+-- Definitions (see docs/Part1_Analysis.md):
+--   * Customer = clean user with >= 1 delivered order.
 --   * Revenue per customer = delivered revenue of the channel's
---     customers / number of customers (not signups) (M3).
---   * Repeat rate = customers with >= 2 delivered orders / customers (M4).
+--     customers / number of customers (not signups).
+--   * Repeat rate = customers with >= 2 delivered orders / customers.
 -- Filters and edge cases:
 --   * Clean tables only: duplicates and test accounts already removed;
 --     each order_id appears once (PRIMARY KEY), so COUNT(*) of orders
@@ -14,14 +14,14 @@
 --   * Status: delivered only, for both revenue and order counts.
 --     Cancelled/returned orders add no revenue and don't count towards
 --     the 2 orders needed for a repeat.
---   * Unknown-channel users excluded with NOT channel_was_blank (D11).
+--   * Unknown-channel users excluded with NOT channel_was_blank.
 --   * Users with no delivered order drop out at the INNER JOIN: they
 --     are not customers, so they're in neither numerator nor denominator.
---   * Rounding only at display (M8): revenue_per_customer_exact is kept
+--   * Rounding only at display: revenue_per_customer_exact is kept
 --     unrounded for Q4; displayed money to nearest rupee, % to 1 dp.
 -- Expected result: 5 rows (Affiliate, Google Ads, Influencer, Meta Ads,
 --   then Organic). Paid customer counts = Q2 (21): 505 / 655 / 307 / 675.
---   Organic customers = 461 (predicted in DECISIONS.md from earlier
+--   Organic customers = 461 (predicted from earlier
 --   outputs). total_delivered_revenue over the 5 rows = clean delivered
 --   total 4,961,884 - Unknown customers' 85,089 = 4,876,795.
 -- =====================================================================

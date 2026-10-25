@@ -1,9 +1,9 @@
 -- =====================================================================
 -- 16_clean_users.sql
 -- What:    Builds clean_users from raw_users:
---            * excludes internal QA test accounts (U2, DECISIONS D10)
+--            * excludes internal QA test accounts (issue U2)
 --            * replaces a blank acquisition_channel with 'Unknown' and
---              records that it was blank (U1, D11)
+--              records that it was blank (U1)
 --          raw_users is only read, never changed.
 -- Assumptions:
 --   * Test account = email domain 'urbancart.in' (the company's own

@@ -3,7 +3,7 @@
 -- What:    One-row health summary of raw_orders: row count, ID
 --          uniqueness, NULLs per column, order date range, and basic
 --          order_value checks (min, max, average, median, zero/negative).
---          (No formal outlier rule; see DECISIONS.md D6.)
+--          (No formal outlier rule was applied.)
 -- Assumptions:
 --   * ALL statuses included and duplicates NOT removed: this describes
 --     the raw file, not the analysis population.

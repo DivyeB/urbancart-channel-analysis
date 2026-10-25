@@ -1,6 +1,6 @@
 # Part 1: Analysis
 
-All analysis is SQL (DuckDB), run in order from [`sql/`](../sql); each result is saved in [`outputs/`](../outputs). Money is rounded to the nearest rupee and percentages to one decimal place, from unrounded values. Assumptions and decisions are logged in [`DECISIONS.md`](../DECISIONS.md).
+All analysis is SQL (DuckDB), run in order from [`sql/`](../sql); each result is saved in [`outputs/`](../outputs). Money is rounded to the nearest rupee and percentages to one decimal place, from unrounded values. Key assumptions are listed in the [README](../README.md#assumptions).
 
 **Terms.** *Raw Tables* (`raw_*`) hold the CSVs exactly as delivered. *Clean Tables* (`clean_*`) hold the corrected data every metric is calculated from.
 

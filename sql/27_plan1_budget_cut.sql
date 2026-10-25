@@ -1,10 +1,10 @@
 -- =====================================================================
 -- 27_plan1_budget_cut.sql
--- Part 2 (recommendation): query-backed figures for Plan 1 (D13).
+-- Part 2 (recommendation): query-backed figures for Plan 1.
 --   Query 1: Apr-Jun spend base, the 20% saving target, and Plan 1's
 --            per-channel change and resulting quarterly spend.
 --   Query 2: ESTIMATED customer impact per quarter of each change.
--- Plan 1 rules (D13), all derived from data, none typed in:
+-- Plan 1 rules, all derived from data, none typed in:
 --   * Base = actual Apr-Jun 2026 paid spend (latest run-rate).
 --   * Saving target = 20% of the base.
 --   * Google increase = headroom inside Google's OBSERVED monthly spend

@@ -2,21 +2,21 @@
 -- 21_q2_cac_by_channel.sql
 -- Brief Part 1, Q2: for each paid channel, total spend, number of new
 -- customers and CAC.
--- Definitions (DECISIONS.md, M1, M2, M8):
+-- Definitions (see docs/Part1_Analysis.md):
 --   * New customer = clean user with >= 1 order where status =
 --     'delivered', counted once (COUNT DISTINCT user_id).
 --   * CAC = total Jan-Jun spend / new customers.
 -- Filters and edge cases:
 --   * Clean tables only: duplicates and test accounts already removed.
 --   * Status: delivered only. Cancelled/returned never make a customer.
---   * Unknown-channel users excluded with NOT channel_was_blank (D11).
+--   * Unknown-channel users excluded with NOT channel_was_blank.
 --     (They could not join to spend anyway; the filter is explicit so
 --     the rule is visible in every metric query.)
 --   * The result is driven FROM the spend table, so only paid channels
 --     appear (Organic has no spend). LEFT JOIN keeps a paid channel
 --     even if it had zero customers; NULLIF then makes its CAC NULL
 --     instead of a divide-by-zero error.
---   * Rounding only at display (M8): cac_exact is unrounded, cac_inr is
+--   * Rounding only at display: cac_exact is unrounded, cac_inr is
 --     rounded to the nearest rupee.
 -- Expected result:
 --   Query 1: 4 rows (one per paid channel). total_spend_inr sums to

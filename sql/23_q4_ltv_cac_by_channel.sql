@@ -2,14 +2,14 @@
 -- 23_q4_ltv_cac_by_channel.sql
 -- Brief Part 1, Q4: LTV:CAC for each paid channel, and which channel
 -- gives the best and worst return.
--- Definitions (DECISIONS.md, M1-M3, M5, M6, M8):
---   * CAC = channel spend / new customers                       (M2)
---   * Revenue per customer = delivered revenue / new customers  (M3)
---   * LTV = revenue per customer x 0.30 (brief's flat margin)   (M5)
---   * LTV:CAC = LTV / CAC                                        (M6)
+-- Definitions (see docs/Part1_Analysis.md):
+--   * CAC = channel spend / new customers                      
+--   * Revenue per customer = delivered revenue / new customers 
+--   * LTV = revenue per customer x 0.30 (brief's flat margin)  
+--   * LTV:CAC = LTV / CAC                                       
 -- Filters and edge cases:
 --   * Recomputed from the clean tables, NOT from the rounded outputs of
---     21/22, so no rounding error carries through (M8).
+--     21/22, so no rounding error carries through.
 --   * Status: delivered only. Unknown excluded (NOT channel_was_blank).
 --   * Driven from the spend table, so only the 4 paid channels appear
 --     (Organic has no CAC, so no LTV:CAC).
