@@ -11,3 +11,21 @@
 **Risk and what we'll watch.** Removing extra spend might lose more customers than adding it gained. We'll track weekly new customers and CAC for Meta, Google and Organic against the April–May baseline. If total new customers fall more than 10% for three weeks running, we restore part of Meta's budget.
 
 **Caveats.** Assumes a flat 30% margin for every channel. We removed 35 internal test accounts that had inflated Affiliate's revenue.
+
+---
+
+## Charts
+
+*Built in Looker Studio from `outputs/charts/data/` (exported by `sql/28_export_chart_data.sql`). Charts and captions are not part of the 250-word memo.*
+
+**C1: Meta's spend more than doubled; its new customers didn't follow.** Both lines are indexed to January = 100. June's customer figure is understated because June signups have had less time to buy.
+
+![C1: Meta spend vs new customers, indexed to January = 100](../outputs/charts/C1_meta_spend_vs_customers_index.png)
+
+**C2: Return on spend (LTV:CAC) by paid channel.** Google Ads is the only channel above break-even (1.0).
+
+![C2: LTV:CAC by paid channel](../outputs/charts/C2_ltv_cac_by_channel.png)
+
+**C3: Plan 1: next quarter's spend by channel vs April–June.**
+
+![C3: Plan 1 spend by channel, April–June actual vs next quarter](../outputs/charts/C3_plan1_spend_by_channel.png)
