@@ -1,5 +1,5 @@
 -- =====================================================================
--- 15_profile_channel_name_match.sql
+-- 15_inspect_channel_name_match.sql
 -- What:    Lines up channel names from the two tables CAC will join:
 --          raw_marketing_spend.channel and raw_users.acquisition_channel.
 --          CAC = spend / new customers per channel, so the names must

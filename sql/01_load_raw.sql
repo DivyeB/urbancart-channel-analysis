@@ -16,7 +16,7 @@
 --     (e.g. 499.50) would load exactly instead of failing or rounding.
 --   * No PRIMARY KEY / UNIQUE constraints on raw tables: a key on
 --     order_id would reject the duplicate rows we need to count in
---     profiling. Keys are added on the clean tables (step 4).
+--     inspection. Keys are added on the clean tables (step 4).
 --   * Empty CSV fields load as NULL (DuckDB default).
 -- Expected result: raw_users 5,135 rows; raw_orders 5,684 rows;
 --   raw_marketing_spend 24 rows (file line counts minus the header).

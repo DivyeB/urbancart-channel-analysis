@@ -1,5 +1,5 @@
 -- =====================================================================
--- 03_profile_users_overview.sql
+-- 03_inspect_users_overview.sql
 -- What:    One-row health summary of raw_users: row count, ID uniqueness,
 --          NULLs per column, signup date range, signups outside Jan-Jun.
 -- Assumptions:

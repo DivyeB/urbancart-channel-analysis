@@ -1,5 +1,5 @@
 -- =====================================================================
--- 14_profile_spend_grid.sql
+-- 14_inspect_spend_grid.sql
 -- What:    Completeness and sanity of raw_marketing_spend.
 --   Query 1: one-row overview: rows, distinct (month, channel) pairs,
 --            NULLs, month range and format, spend range, total spend.

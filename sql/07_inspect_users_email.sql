@@ -1,5 +1,5 @@
 -- =====================================================================
--- 07_profile_users_email.sql
+-- 07_inspect_users_email.sql
 -- What:    Looks for junk or inconsistent values in users.email:
 --   Query 1: one-row summary of each check
 --   Query 2: count of users per email domain (junk domains stand out)

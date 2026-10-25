@@ -1,5 +1,5 @@
 -- =====================================================================
--- 08_profile_users_test_accounts.sql
+-- 08_inspect_users_test_accounts.sql
 -- What:    Follow-up to 07, which found 35 emails not matching the
 --          'user<user_id>@' pattern and 35 users on the company's own
 --          domain urbancart.in (examples: qa.test1@urbancart.in).
@@ -12,7 +12,7 @@
 --   * "test-like" = fails the user<id>@ pattern OR is on urbancart.in.
 --     Using OR (not AND) so Query 1 can show whether the rules overlap.
 --   * Query 3 reads raw_orders: duplicates NOT removed and ALL statuses
---     shown (no delivered filter), because this is profiling. It is an
+--     shown (no delivered filter), because this is inspection. It is an
 --     upper bound until dedup is decided in step 4.
 --   * Each query repeats the CTE because a CTE only lives for one
 --     statement (same in MySQL).

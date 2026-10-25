@@ -1,5 +1,5 @@
 -- =====================================================================
--- 05_profile_users_channel_values.sql
+-- 05_inspect_users_channel_values.sql
 -- What:    Every distinct acquisition_channel value with its user count,
 --          plus flags that expose hidden problems: NULL (blank in CSV),
 --          whitespace-only, leading/trailing spaces. Sorted so casing

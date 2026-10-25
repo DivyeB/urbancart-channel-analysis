@@ -1,5 +1,5 @@
 -- =====================================================================
--- 10_profile_orders_duplicates.sql
+-- 10_inspect_orders_duplicates.sql
 -- What:    Duplicate orders, in three flavours:
 --   Query 1: order_ids on more than one row, split into
 --              * exact duplicates (all 5 columns identical)

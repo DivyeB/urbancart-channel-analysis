@@ -1,5 +1,5 @@
 -- =====================================================================
--- 06_profile_users_city_values.sql
+-- 06_inspect_users_city_values.sql
 -- What:    Every distinct city value with its user count and the same
 --          hidden-problem flags as 05 (NULL, whitespace, spacing),
 --          sorted so spelling/casing variants sit together.

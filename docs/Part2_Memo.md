@@ -16,7 +16,7 @@
 
 ## Charts
 
-*Built in Looker Studio from `outputs/charts/data/` (exported by `sql/28_export_chart_data.sql`). Charts and captions are not part of the 250-word memo.*
+*Built in [Looker Studio](https://datastudio.google.com/reporting/c5ab5ca3-bf17-40e4-a92a-7b85be3fed09) from `outputs/charts/data/` (exported by `sql/28_export_chart_data.sql`). Charts and captions are not part of the 250-word memo.*
 
 **C1: Meta's spend more than doubled; its new customers didn't follow.** Both lines are indexed to January = 100. June's customer figure is understated because June signups have had less time to buy.
 

@@ -1,5 +1,5 @@
 -- =====================================================================
--- 12_profile_orders_orphans.sql
+-- 12_inspect_orders_orphans.sql
 -- What:    Referential integrity between orders and users.
 --   Query 1: "orphan" orders whose user_id does not exist in raw_users
 --            (they have no acquisition channel, so cannot be attributed),

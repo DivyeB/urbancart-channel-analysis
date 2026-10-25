@@ -1,5 +1,5 @@
 -- =====================================================================
--- 11_profile_orders_status_values.sql
+-- 11_inspect_orders_status_values.sql
 -- What:    Every distinct status value with row count, share, and
 --          order_value stats, plus flags for NULL, spacing problems and
 --          values outside the brief's list (delivered/cancelled/returned).

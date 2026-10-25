@@ -1,5 +1,5 @@
 -- =====================================================================
--- 04_profile_users_duplicate_ids.sql
+-- 04_inspect_users_duplicate_ids.sql
 -- What:    Finds user_ids that appear on more than one row, and splits
 --          them into:
 --            * exact duplicates: every copy is identical in all 5 columns

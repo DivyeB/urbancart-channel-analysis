@@ -8,7 +8,7 @@
 --          raw_orders is only read, never changed.
 -- Assumptions:
 --   * Run after 16 (needs clean_users for the foreign key).
---   * SELECT DISTINCT removes exact duplicates. Profiling found only
+--   * SELECT DISTINCT removes exact duplicates. Inspection found only
 --     exact ones (10). If a future file had a CONFLICTING duplicate
 --     (same order_id, different values), DISTINCT would keep both and
 --     the PRIMARY KEY would fail the build. That is intended.
@@ -16,8 +16,8 @@
 --     domain rule as 16. NOT EXISTS (not NOT IN) because NOT IN returns
 --     nothing at all if the subquery ever yields a NULL user_id.
 --   * Orphan orders are NOT filtered: the FOREIGN KEY to clean_users
---     makes any orphan fail the build (profiling found none, 12).
---   * CHECK constraints assert the profiled facts: status is one of the
+--     makes any orphan fail the build (inspection found none, 12).
+--   * CHECK constraints assert the inspected facts: status is one of the
 --     3 brief values (11); order_value > 0 (09).
 -- Expected result: clean_orders = 5,478 deduplicated orders minus the
 --   deduplicated orders of the 35 test accounts. Exact figure and the

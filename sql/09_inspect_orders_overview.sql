@@ -1,5 +1,5 @@
 -- =====================================================================
--- 09_profile_orders_overview.sql
+-- 09_inspect_orders_overview.sql
 -- What:    One-row health summary of raw_orders: row count, ID
 --          uniqueness, NULLs per column, order date range, and basic
 --          order_value checks (min, max, average, median, zero/negative).

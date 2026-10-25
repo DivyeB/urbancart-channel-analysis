@@ -8,11 +8,11 @@
 -- Assumptions:
 --   * Test account = email domain 'urbancart.in' (the company's own
 --     domain). 08 showed this flags exactly the 35 qa.test* users.
---   * "Blank" = NULL or whitespace-only. Profiling found only NULLs
+--   * "Blank" = NULL or whitespace-only. Inspection found only NULLs
 --     (72), but trimming makes the rule safe for future files.
 --   * No duplicate user_ids exist (04), so no dedup is needed here. The
 --     PRIMARY KEY enforces it: a future duplicate would fail the build.
---   * NOT NULL on every column: profiling found no NULLs (03), so these
+--   * NOT NULL on every column: inspection found no NULLs (03), so these
 --     act as assertions. A row with a NULL email is deliberately NOT
 --     filtered out by the WHERE clause; it reaches the NOT NULL check
 --     and fails loudly instead of disappearing silently.

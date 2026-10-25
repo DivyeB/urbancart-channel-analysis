@@ -1,5 +1,5 @@
 -- =====================================================================
--- 13_profile_orders_timing.sql
+-- 13_inspect_orders_timing.sql
 -- What:    Date logic of orders.
 --   Query 1: orders dated BEFORE the user's signup_date (impossible in a
 --            clean system), by status, with the worst gap in days.

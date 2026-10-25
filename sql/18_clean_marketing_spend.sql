@@ -1,7 +1,7 @@
 -- =====================================================================
 -- 18_clean_marketing_spend.sql
 -- What:    Builds clean_marketing_spend from raw_marketing_spend. Values
---          are unchanged (profiling found no issues, 14-15); adds a real
+--          are unchanged (inspection found no issues, 14-15); adds a real
 --          DATE column month_start (first day of the month) next to the
 --          'YYYY-MM' text, so months can be joined to signup dates.
 --          raw_marketing_spend is only read, never changed.
